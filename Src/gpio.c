@@ -75,10 +75,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOD, key2_rset_Pin|key3_set_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, key3_rest_Pin|m2_Pin|m0_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, key3_rest_Pin|m0_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, reset_Pin|m1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, m2_Pin|reset_Pin|m1_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : PCPin PCPin PCPin */
   GPIO_InitStruct.Pin = key1_rset_Pin|key1_set_Pin|key2_set_Pin;

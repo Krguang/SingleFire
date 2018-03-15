@@ -47,6 +47,18 @@
 #include "stdarg.h"
 #include "string.h"
 #include <stdlib.h>
+
+unsigned char usart1_rx_buffer[128];
+unsigned char usart1_tx_buffer[128];
+unsigned int usart1_tx_len = 0;
+unsigned char usart1_rx_flag = 0;
+
+unsigned char usart3_rx_buffer[128];
+unsigned char usart3_tx_buffer[128];
+unsigned int usart3_tx_len = 0;
+unsigned char usart3_rx_flag = 0;
+
+
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;

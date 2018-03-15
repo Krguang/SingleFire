@@ -534,9 +534,15 @@
     <ClInclude Include="$(BSP_ROOT)\STM32F1xxxx\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_wwdg.h">
       <Filter>Header files\Device-specific files\HAL</Filter>
     </ClInclude>
+    <ClCompile Include="Src\dataProcessing.c">
+      <Filter>Source files\Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\dma.h">
+      <Filter>Header files\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\dataProcessing.h">
       <Filter>Header files\Inc</Filter>
     </ClInclude>
   </ItemGroup>

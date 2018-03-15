@@ -43,38 +43,14 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "dataProcessing.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-unsigned char usart1_rx_buffer[128];
-unsigned char usart1_tx_buffer[128];
-unsigned int usart1_tx_len = 0;
-unsigned char usart1_rx_flag = 0;
 
-unsigned char usart3_rx_buffer[128];
-unsigned char usart3_tx_buffer[128];
-unsigned int usart3_tx_len = 0;
-unsigned char usart3_rx_flag = 0;
-
-uint8_t key1Flag = 0;
-uint8_t key2Flag = 0;
-uint8_t key3Flag = 0;
-
-uint8_t key1Temp = 0;
-uint8_t key2Temp = 0;
-uint8_t key3Temp = 0;
- 
-uint8_t key1Read = 0;
-uint8_t key2Read = 0;
-uint8_t key3Read = 0;
-
-uint8_t key1InFlag = 0;
-uint8_t key2InFlag = 0;
-uint8_t key3InFlag = 0;
 
 /* USER CODE END PV */
 
@@ -123,7 +99,9 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  if (HAL_UART_Receive_DMA(&huart1, (uint8_t *)&usart1_rx_buffer, 128) != HAL_OK)    Error_Handler();
   if (HAL_UART_Receive_DMA(&huart3, (uint8_t *)&usart3_rx_buffer, 128) != HAL_OK)    Error_Handler();
+  __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
   /* USER CODE END 2 */
 
@@ -132,149 +110,12 @@ int main(void)
   while (1)
   {
 
-  /* USER CODE END WHILE */
+	  /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+	  /* USER CODE BEGIN 3 */
 
-	  if (usart1_rx_flag == 1)
-	  {
-		  dma_send(&huart3, &hdma_usart3_tx, usart1_tx_buffer, usart1_tx_len);
-		  usart1_rx_flag = 0;
-	  }
-	  
-	  if (usart3_rx_flag == 1)
-	  {
-		  dma_send(&huart1, &hdma_usart1_tx, usart3_tx_buffer, usart3_tx_len);
-
-		  if (usart3_tx_len == 3)
-		  {
-			  if (usart3_tx_buffer[0] == 1)
-			  {
-				  key1Flag = !key1Flag;
-
-				  if (key1Flag)
-				  {
-					  HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_RESET);
-				  }
-				  else
-				  {
-					  HAL_GPIO_WritePin(key1_rset_GPIO_Port, key1_rset_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key1_rset_GPIO_Port, key1_rset_Pin, GPIO_PIN_RESET);
-				  }
-			  }
-
-			  if (usart3_tx_buffer[1] == 1)
-			  {
-				  key2Flag = !key2Flag;
-
-				  if (key2Flag)
-				  {
-					  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_RESET);
-				  }
-				  else
-				  {
-					  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_RESET);
-				  }
-			  }
-
-			  if (usart3_tx_buffer[2] == 1)
-			  {
-				  key3Flag = !key3Flag;
-
-				  if (key2Flag)
-				  {
-					  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_RESET);
-				  }
-				  else
-				  {
-					  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_RESET);
-				  }
-
-				  if (key3Flag)
-				  {
-					  HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_SET);
-					  HAL_Delay(100);
-					  HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_RESET);
-				  }
-			  }
-
-		  }
-
-		  usart3_rx_flag = 0;
-	  }
-
-	  key1Read = HAL_GPIO_ReadPin(in1_GPIO_Port, in1_Pin);
-	  if (key1Read == key1Temp)
-	  {
-		  key1Temp = !key1Temp;
-		  key1InFlag = !key1InFlag;
-		  if (key1InFlag)
-		  {
-			  HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_RESET);
-		  }
-		  else
-		  {
-			  HAL_GPIO_WritePin(key1_rset_GPIO_Port, key1_rset_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key1_rset_GPIO_Port, key1_rset_Pin, GPIO_PIN_RESET);
-		  }
-	  }
-
-	  key2Read = HAL_GPIO_ReadPin(in2_GPIO_Port, in2_Pin);
-	  if (key2Read == key2Temp)
-	  {
-		  key2Temp = !key2Temp;
-		  key2InFlag = !key2InFlag;
-		  if (key2InFlag)
-		  {
-			  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_RESET);
-		  }
-		  else
-		  {
-			  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_RESET);
-		  }
-	  }
-
-	  key3Read = HAL_GPIO_ReadPin(in3_GPIO_Port, in3_Pin);
-	  if (key3Read == key3Temp)
-	  {
-		  key3Temp = !key3Temp;
-		  key3InFlag = !key3InFlag;
-		  if (key3InFlag)
-		  {
-			  HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_RESET);
-		  }
-		  else
-		  {
-			  HAL_GPIO_WritePin(key3_rest_GPIO_Port, key3_rest_Pin, GPIO_PIN_SET);
-			  HAL_Delay(100);
-			  HAL_GPIO_WritePin(key3_rest_GPIO_Port, key3_rest_Pin, GPIO_PIN_RESET);
-		  }
-	  }
-
-	  
+	  dataProcessing();
   }
-
- 
   /* USER CODE END 3 */
 
 }
