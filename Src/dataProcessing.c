@@ -94,16 +94,11 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 
 		if (huart == &huart3) {
 			
+			dma_send(&huart1, &hdma_usart1_tx, buffer, length);
+
 			backAddress[0] = buffer[0];
 			backAddress[1] = buffer[1];
 			backAddress[2] = buffer[2];
-/*
-			for (size_t i = 0; i < length-3; i++)
-			{
-				usart3_tx_temp2[i] = buffer[i + 3];
-			}
-	*/		
-			dma_send(&huart3, &hdma_usart3_tx, buffer, length);
 			
 			if (length == 6)
 			{
@@ -160,8 +155,6 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 						HAL_GPIO_WritePin(key3_rest_GPIO_Port, key3_rest_Pin, GPIO_PIN_RESET);
 					}
 				}
-
-
 			}
 		}
 	}
@@ -183,6 +176,7 @@ void dataProcessing() {
 	}
 
 	key1Read = HAL_GPIO_ReadPin(in1_GPIO_Port, in1_Pin);
+
 	if (key1Read == key1Temp)
 	{
 		key1Temp = !key1Temp;
@@ -202,6 +196,7 @@ void dataProcessing() {
 	}
 
 	key2Read = HAL_GPIO_ReadPin(in2_GPIO_Port, in2_Pin);
+
 	if (key2Read == key2Temp)
 	{
 		key2Temp = !key2Temp;
@@ -221,6 +216,7 @@ void dataProcessing() {
 	}
 
 	key3Read = HAL_GPIO_ReadPin(in3_GPIO_Port, in3_Pin);
+
 	if (key3Read == key3Temp)
 	{
 		key3Temp = !key3Temp;
