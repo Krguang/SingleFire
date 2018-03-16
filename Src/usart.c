@@ -368,6 +368,12 @@ void dma_send(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned char 
 
 }
 
+int _write(int fd, char *pBuffer, int size)
+{
+	HAL_UART_Transmit(&huart1, pBuffer, size, 0xff);
+	return size;
+}
+
 /* USER CODE END 1 */
 
 /**

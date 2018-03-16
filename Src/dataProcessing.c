@@ -97,21 +97,20 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 			backAddress[0] = buffer[0];
 			backAddress[1] = buffer[1];
 			backAddress[2] = buffer[2];
-
+/*
 			for (size_t i = 0; i < length-3; i++)
 			{
 				usart3_tx_temp2[i] = buffer[i + 3];
 			}
-			uint8_t a[5] = { 0,0,0,0,0 };
-
-			dma_send(&huart1, &hdma_usart1_tx, usart3_tx_temp2, length-3);
-		
+	*/		
+			dma_send(&huart3, &hdma_usart3_tx, buffer, length);
+			
 			if (length == 6)
 			{
-				if (usart3_tx_buffer[0] == 1)
+				if (buffer[3] == 1)
 				{
 					key1Flag = !key1Flag;
-
+					
 					if (key1Flag)
 					{
 						HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_SET);
@@ -126,7 +125,7 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 					}
 				}
 
-				if (usart3_tx_buffer[1] == 1)
+				if (buffer[4] == 1)
 				{
 					key2Flag = !key2Flag;
 
@@ -144,22 +143,9 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 					}
 				}
 
-				if (usart3_tx_buffer[2] == 1)
+				if (buffer[5] == 1)
 				{
 					key3Flag = !key3Flag;
-
-					if (key2Flag)
-					{
-						HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_SET);
-						HAL_Delay(100);
-						HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_RESET);
-					}
-					else
-					{
-						HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_SET);
-						HAL_Delay(100);
-						HAL_GPIO_WritePin(key2_rset_GPIO_Port, key2_rset_Pin, GPIO_PIN_RESET);
-					}
 
 					if (key3Flag)
 					{
@@ -167,7 +153,15 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 						HAL_Delay(100);
 						HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_RESET);
 					}
+					else
+					{
+						HAL_GPIO_WritePin(key3_rest_GPIO_Port, key3_rest_Pin, GPIO_PIN_SET);
+						HAL_Delay(100);
+						HAL_GPIO_WritePin(key3_rest_GPIO_Port, key3_rest_Pin, GPIO_PIN_RESET);
+					}
 				}
+
+
 			}
 		}
 	}
