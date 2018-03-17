@@ -115,8 +115,13 @@ int main(void)
   /* USER CODE BEGIN 3 */
 
 	  dataProcessing();
+	  /*挂起滴答定时器增加以避免滴答定时器中断唤醒睡眠模式*/
 	  HAL_SuspendTick();
+
+	  /*进入睡眠模式，等待中断唤醒*/
 	  HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+
+	  /*退出睡眠模式之后，释放滴答定时器中断*/
 	  HAL_ResumeTick();
   }
   /* USER CODE END 3 */
