@@ -181,8 +181,8 @@ void dataProcessing() {
 	if (key1Read == key1Temp)
 	{
 		key1Temp = !key1Temp;
-		key1InFlag = !key1InFlag;
-		if (key1InFlag)
+		key1Flag = !key1Flag;
+		if (key1Flag)
 		{
 			HAL_GPIO_WritePin(key1_set_GPIO_Port, key1_set_Pin, GPIO_PIN_SET);
 			HAL_Delay(100);
@@ -201,8 +201,8 @@ void dataProcessing() {
 	if (key2Read == key2Temp)
 	{
 		key2Temp = !key2Temp;
-		key2InFlag = !key2InFlag;
-		if (key2InFlag)
+		key2Flag = !key2Flag;
+		if (key2Flag)
 		{
 			HAL_GPIO_WritePin(key2_set_GPIO_Port, key2_set_Pin, GPIO_PIN_SET);
 			HAL_Delay(100);
@@ -221,8 +221,8 @@ void dataProcessing() {
 	if (key3Read == key3Temp)
 	{
 		key3Temp = !key3Temp;
-		key3InFlag = !key3InFlag;
-		if (key3InFlag)
+		key3Flag = !key3Flag;
+		if (key3Flag)
 		{
 			HAL_GPIO_WritePin(key3_set_GPIO_Port, key3_set_Pin, GPIO_PIN_SET);
 			HAL_Delay(100);
