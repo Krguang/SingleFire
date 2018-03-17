@@ -38,6 +38,17 @@
 /* USER CODE BEGIN 0 */
 #include "usart.h"
 #include "dataProcessing.h"
+
+void delay_ms(uint16_t m) {
+	for (size_t i = 0; i < m; i++)
+	{
+		for (size_t i = 0; i < 1000; i++)
+		{
+
+		}
+	}
+}
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -204,7 +215,7 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI0_IRQn 0 */
-	key1Read = !key1Read;
+	
   /* USER CODE END EXTI0_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
   /* USER CODE BEGIN EXTI0_IRQn 1 */
@@ -218,7 +229,7 @@ void EXTI0_IRQHandler(void)
 void EXTI1_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI1_IRQn 0 */
-	key2Read = !key2Read;
+	
   /* USER CODE END EXTI1_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_1);
   /* USER CODE BEGIN EXTI1_IRQn 1 */
@@ -232,7 +243,7 @@ void EXTI1_IRQHandler(void)
 void EXTI2_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI2_IRQn 0 */
-	key3Read = !key3Read;
+	
   /* USER CODE END EXTI2_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
   /* USER CODE BEGIN EXTI2_IRQn 1 */
@@ -325,6 +336,23 @@ void USART3_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	delay_ms(50);  
+	switch (GPIO_Pin)
+	{
+	case GPIO_PIN_0:
+		key1Read = !key1Read;
+		break;
+	case GPIO_PIN_1:
+		key2Read = !key2Read;
+		break;
+	case GPIO_PIN_2:
+		key3Read = !key3Read;
+		break;
+	}
+}
 
 /* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
