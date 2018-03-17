@@ -90,7 +90,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  __HAL_RCC_PWR_CLK_ENABLE();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -110,11 +110,14 @@ int main(void)
   while (1)
   {
 
-	  /* USER CODE END WHILE */
+  /* USER CODE END WHILE */
 
-	  /* USER CODE BEGIN 3 */
+  /* USER CODE BEGIN 3 */
 
 	  dataProcessing();
+	  HAL_SuspendTick();
+	  HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+	  HAL_ResumeTick();
   }
   /* USER CODE END 3 */
 

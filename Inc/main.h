@@ -73,10 +73,13 @@
 #define m0_GPIO_Port GPIOA
 #define in1_Pin GPIO_PIN_0
 #define in1_GPIO_Port GPIOB
+#define in1_EXTI_IRQn EXTI0_IRQn
 #define in2_Pin GPIO_PIN_1
 #define in2_GPIO_Port GPIOB
+#define in2_EXTI_IRQn EXTI1_IRQn
 #define in3_Pin GPIO_PIN_2
 #define in3_GPIO_Port GPIOB
+#define in3_EXTI_IRQn EXTI2_IRQn
 
 /* ########################## Assert Selection ############################## */
 /**

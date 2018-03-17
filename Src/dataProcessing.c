@@ -175,7 +175,8 @@ void dataProcessing() {
 		usart3_rx_flag = 0;
 	}
 
-	key1Read = HAL_GPIO_ReadPin(in1_GPIO_Port, in1_Pin);
+
+	//key1Read = HAL_GPIO_ReadPin(in1_GPIO_Port, in1_Pin);
 
 	if (key1Read == key1Temp)
 	{
@@ -195,7 +196,7 @@ void dataProcessing() {
 		}
 	}
 
-	key2Read = HAL_GPIO_ReadPin(in2_GPIO_Port, in2_Pin);
+	//key2Read = HAL_GPIO_ReadPin(in2_GPIO_Port, in2_Pin);
 
 	if (key2Read == key2Temp)
 	{
@@ -215,7 +216,7 @@ void dataProcessing() {
 		}
 	}
 
-	key3Read = HAL_GPIO_ReadPin(in3_GPIO_Port, in3_Pin);
+	//key3Read = HAL_GPIO_ReadPin(in3_GPIO_Port, in3_Pin);
 
 	if (key3Read == key3Temp)
 	{
