@@ -102,6 +102,7 @@ void cmdProcessing(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hdma, unsigned 
 			
 			if (length == 6)
 			{
+				HAL_Delay(100);
 				if (buffer[3] == 1)
 				{
 					key1Flag = !key1Flag;
